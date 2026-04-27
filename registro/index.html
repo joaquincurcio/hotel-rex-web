@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crear cuenta | Hotel Rex</title>
+  <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-card">
+      <img class="auth-logo" src="../assets/hotel-rex-logo.svg" alt="Hotel Rex" />
+      <p class="eyebrow">HOTEL REX</p>
+      <h1 data-auth="registerTitle">Crear cuenta</h1>
+      <p data-auth="registerCopy">Guardá tus datos de huésped para agilizar próximas consultas.</p>
+      <form class="auth-form" data-redirect="../mi-cuenta/">
+        <label><span data-auth="firstName">Nombre</span><input name="firstName" type="text" required /></label>
+        <label><span data-auth="lastName">Apellido</span><input name="lastName" type="text" required /></label>
+        <label><span data-auth="email">Email</span><input name="email" type="email" required /></label>
+        <label><span data-auth="phone">Teléfono</span><input name="phone" type="tel" /></label>
+        <label><span data-auth="country">País</span><input name="country" type="text" /></label>
+        <label>
+          <span data-auth="guestType">Tipo de huésped</span>
+          <select name="guestType">
+            <option value="student" data-auth="student">Estudiante</option>
+            <option value="tourist" data-auth="tourist">Turista</option>
+            <option value="company" data-auth="company">Empresa</option>
+            <option value="other" data-auth="other">Otro</option>
+          </select>
+        </label>
+        <label><span data-auth="password">Contraseña</span><input name="password" type="password" required /></label>
+        <button class="btn primary" type="submit" data-auth="register">Registrarme</button>
+      </form>
+      <div class="auth-links">
+        <a href="../login/" data-auth="goLogin">Ya tengo cuenta</a>
+        <a href="../" data-auth="back">Volver al sitio</a>
+      </div>
+    </main>
+  <script src="/auth.js"></script>
+  </body>
+</html>

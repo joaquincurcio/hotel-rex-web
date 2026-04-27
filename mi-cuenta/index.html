@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mi cuenta | Hotel Rex</title>
+  <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-card">
+      <img class="auth-logo" src="../assets/hotel-rex-logo.svg" alt="Hotel Rex" />
+      <p class="eyebrow">HOTEL REX</p>
+      <h1 data-auth="accountTitle">Mi cuenta</h1>
+      <p data-auth="accountCopy">Estos datos quedan guardados localmente en esta versión.</p>
+      <form class="auth-form">
+        <label><span data-auth="firstName">Nombre</span><input name="firstName" type="text" /></label>
+        <label><span data-auth="lastName">Apellido</span><input name="lastName" type="text" /></label>
+        <label><span data-auth="email">Email</span><input name="email" type="email" /></label>
+        <label><span data-auth="phone">Teléfono</span><input name="phone" type="tel" /></label>
+        <label><span data-auth="country">País</span><input name="country" type="text" /></label>
+        <label>
+          <span data-auth="guestType">Tipo de huésped</span>
+          <select name="guestType">
+            <option value="student" data-auth="student">Estudiante</option>
+            <option value="tourist" data-auth="tourist">Turista</option>
+            <option value="company" data-auth="company">Empresa</option>
+            <option value="other" data-auth="other">Otro</option>
+          </select>
+        </label>
+        <button class="btn primary" type="submit" data-auth="save">Guardar datos</button>
+        <p class="form-note" data-status></p>
+      </form>
+      <div class="auth-links">
+        <button class="btn secondary-dark" type="button" data-logout data-auth="logout">Cerrar sesión</button>
+        <a href="../" data-auth="back">Volver al sitio</a>
+      </div>
+      <section class="account-history">
+        <h2 data-auth="historyTitle">Historial</h2>
+        <div class="history-grid">
+          <article>
+            <h3 data-auth="inquiriesTitle">Consultas</h3>
+            <div data-history="inquiries"></div>
+          </article>
+          <article>
+            <h3 data-auth="reservationsTitle">Reservas</h3>
+            <div data-history="reservations"></div>
+          </article>
+        </div>
+      </section>
+    </main>
+  <script src="/auth.js"></script>
+  </body>
+</html>

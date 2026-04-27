@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Hotel Rex: residencia estudiantil y hospedaje en el centro de La Plata. Habitaciones simples, dobles y triples con baño privado."
+    />
+    <title>Hotel Rex | Residencia & Hospedaje en La Plata</title>
+    <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#home" aria-label="Hotel Rex">
+        <span class="brand-mark"><img src="./assets/hotel-rex-logo.svg" alt="Hotel Rex" /></span>
+        <span>
+          <strong>Hotel Rex</strong>
+          <small>La Plata</small>
+        </span>
+      </a>
+      <nav class="main-nav" aria-label="Principal">
+        <a href="#rooms" data-i18n="nav.rooms">Habitaciones</a>
+        <a href="#services" data-i18n="nav.services">Servicios</a>
+        <a href="#videos" data-i18n="nav.videos">Videos</a>
+        <a href="#residence" data-i18n="nav.residence">Residencia</a>
+        <a href="#contact" data-i18n="nav.reserve">Consultar</a>
+        <a href="./login/" data-i18n="nav.signIn">Iniciar sesión</a>
+      </nav>
+      <div class="header-actions">
+        <div class="segmented" aria-label="Idioma">
+          <button data-lang="es" class="active">ES</button>
+          <button data-lang="en">EN</button>
+          <button data-lang="pt">PT</button>
+        </div>
+        <select id="currency" aria-label="Moneda">
+          <option value="ARS">ARS</option>
+          <option value="USD">USD</option>
+          <option value="BRL">BRL</option>
+        </select>
+      </div>
+    </header>
+
+    <main>
+      <section id="home" class="hero">
+        <div class="hero-media" role="img" aria-label="Interior elegante de hotel"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <p class="eyebrow" data-i18n="hero.eyebrow">Centro de La Plata</p>
+          <h1 data-i18n="hero.title">Hotel Rex</h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">Residencia & hospedaje en el centro de La Plata.</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="#contact" data-i18n="hero.primary">Consultar disponibilidad</a>
+            <a class="btn secondary" href="#rooms" data-i18n="hero.secondary">Ver habitaciones</a>
+          </div>
+        </div>
+        <form class="quick-search" id="quickSearch">
+          <label>
+            <span data-i18n="form.roomType">Tipo de habitación</span>
+            <select name="roomType">
+              <option value="simple" data-i18n="rooms.simple.title">Habitación simple</option>
+              <option value="double" data-i18n="rooms.double.title">Habitación doble</option>
+              <option value="triple" data-i18n="rooms.triple.title">Habitación triple</option>
+            </select>
+          </label>
+          <label>
+            <span data-i18n="form.guests">Personas</span>
+            <input name="guestCount" type="number" min="1" value="1" />
+          </label>
+          <label>
+            <span data-i18n="form.checkIn">Ingreso</span>
+            <input name="checkIn" type="date" />
+          </label>
+          <label>
+            <span data-i18n="form.checkOut">Salida</span>
+            <input name="checkOut" type="date" />
+          </label>
+          <label>
+            <span data-i18n="form.modality">Modalidad</span>
+            <select name="modality">
+              <option value="night" data-i18n="modality.night">Por noche</option>
+              <option value="monthly" data-i18n="modality.monthly">Residencia mensual</option>
+            </select>
+          </label>
+          <button class="btn primary" type="button" id="quickToContact" data-i18n="form.check">Consultar</button>
+        </form>
+      </section>
+
+      <section class="intro band">
+        <div>
+          <p class="eyebrow" data-i18n="intro.eyebrow">Residencia y hotel</p>
+          <h2 data-i18n="intro.title">Una estadía cómoda, céntrica y bien resuelta.</h2>
+        </div>
+        <p data-i18n="intro.copy">
+          Hotel Rex combina la practicidad de una residencia estudiantil con la atención de un alojamiento urbano.
+          Habitaciones equipadas, servicios esenciales y una ubicación estratégica a metros del centro.
+        </p>
+      </section>
+
+      <section id="rooms" class="section">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="rooms.eyebrow">Habitaciones</p>
+          <h2 data-i18n="rooms.title">Opciones simples, dobles y triples.</h2>
+          <p data-i18n="rooms.copy">Espacios pensados para estudiar, descansar y alojarse con comodidad.</p>
+        </div>
+        <div class="room-grid" id="roomGrid"></div>
+      </section>
+
+      <section id="monthly" class="monthly-section">
+        <div class="monthly-copy">
+          <p class="eyebrow" data-i18n="monthly.eyebrow">Estadía mensual</p>
+          <h2 data-i18n="monthly.title">Residencia mensual para estudiantes y estadías prolongadas.</h2>
+          <p data-i18n="monthly.copy">Consultá por modalidad mensual en habitaciones equipadas, con servicios incluidos y acceso a espacios comunes para estudiar, descansar y organizar tu rutina en La Plata.</p>
+        </div>
+        <div class="monthly-price-card">
+          <span data-i18n="monthly.label">Valor mensual</span>
+          <strong data-i18n="monthly.price">Consultar precio</strong>
+          <a class="btn primary" href="#contact" data-i18n="monthly.cta">Consultar estadía mensual</a>
+        </div>
+      </section>
+
+      <section id="services" class="section services-section">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="services.eyebrow">Servicios</p>
+          <h2 data-i18n="services.title">Servicios incluidos para alojarte con tranquilidad.</h2>
+          <p data-i18n="services.copy">Una base práctica y cuidada para que tu estadía sea simple, cómoda y bien acompañada desde el primer día.</p>
+        </div>
+        <div class="services-grid" id="servicesGrid"></div>
+      </section>
+
+      <section class="section feature-highlights" id="featured-services">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="featured.eyebrow">Beneficios destacados</p>
+          <h2 data-i18n="featured.title">Más que una habitación: espacios pensados para tu rutina.</h2>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card gym-card">
+            <div class="feature-icon">GYM</div>
+            <h3 data-i18n="featured.gym.title">Gimnasio</h3>
+            <p data-i18n="featured.gym.copy">Contamos con un espacio de gimnasio equipado para que puedas entrenar durante tu estadía, manteniendo tu rutina y bienestar.</p>
+          </article>
+          <article class="feature-card study-card">
+            <div class="feature-icon">STUDY</div>
+            <h3 data-i18n="featured.study.title">Espacio de estudio</h3>
+            <p data-i18n="featured.study.copy">Disponemos de un amplio espacio común ideal para estudiar, trabajar o compartir, con un ambiente tranquilo y cómodo.</p>
+            <ul>
+              <li data-i18n="featured.study.item1">Mesas amplias</li>
+              <li data-i18n="featured.study.item2">Buena iluminación</li>
+              <li data-i18n="featured.study.item3">Ambiente silencioso</li>
+            </ul>
+          </article>
+          <article class="feature-card breakfast-card">
+            <div class="feature-icon">AM</div>
+            <h3 data-i18n="featured.breakfast.title">Desayuno seco incluido</h3>
+            <p data-i18n="featured.breakfast.copy">Incluimos desayuno seco para que puedas comenzar el día de forma práctica y cómoda.</p>
+            <span data-i18n="featured.breakfast.badge">Beneficio incluido</span>
+          </article>
+        </div>
+      </section>
+
+      <section id="residence" class="split-section">
+        <div class="split-image residence-image"></div>
+        <div class="split-copy">
+          <p class="eyebrow" data-i18n="residence.eyebrow">Residencia estudiantil</p>
+          <h2 data-i18n="residence.title">Un lugar práctico para vivir, estudiar y moverse por La Plata.</h2>
+          <p data-i18n="residence.copy">
+            Habitaciones equipadas, espacios comunes y modalidad mensual para estudiantes que buscan una solución
+            cómoda, céntrica y confiable.
+          </p>
+          <a class="btn primary" href="#contact" data-i18n="residence.cta">Consultar opción mensual</a>
+        </div>
+      </section>
+
+      <section id="hotel" class="split-section reverse">
+        <div class="split-image hotel-image"></div>
+        <div class="split-copy">
+          <p class="eyebrow" data-i18n="hotel.eyebrow">Estadías por noche</p>
+          <h2 data-i18n="hotel.title">Para viajes breves, trámites, estudio, salud o trabajo.</h2>
+          <p data-i18n="hotel.copy">
+            Consultas flexibles para turistas, familias, estudiantes en ingreso y personas que necesitan hospedarse
+            temporalmente en una zona céntrica.
+          </p>
+          <a class="btn secondary-dark" href="#contact" data-i18n="hotel.cta">Consultar estadía</a>
+        </div>
+      </section>
+
+      <section id="videos" class="section video-section">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="video.eyebrow">Conocé el hotel</p>
+          <h2 data-i18n="video.title">Videos oficiales de Hotel Rex.</h2>
+          <p data-i18n="video.copy">Mirá contenido del hotel y conocé mejor los espacios antes de consultar disponibilidad.</p>
+        </div>
+        <div class="video-shell">
+          <iframe
+            src="https://www.youtube.com/embed?listType=user_uploads&list=HotelRexOficial"
+            title="Hotel Rex Oficial en YouTube"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <a class="btn secondary-dark" href="https://www.youtube.com/@HotelRexOficial" target="_blank" rel="noreferrer" data-i18n="video.cta">Ver más en YouTube</a>
+      </section>
+
+      <section id="gallery" class="section gallery-section">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="gallery.eyebrow">Galería</p>
+          <h2 data-i18n="gallery.title">Ambientes cálidos, funcionales y bien ubicados.</h2>
+        </div>
+        <div class="gallery-grid">
+          <figure class="gallery-large"><img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1200&q=80" alt="Lobby de hotel elegante" /></figure>
+          <figure><img src="https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&w=900&q=80" alt="Habitación de hotel luminosa" /></figure>
+          <figure><img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&w=900&q=80" alt="Dormitorio con cama doble" /></figure>
+          <figure><img src="https://images.unsplash.com/photo-1555854877-bab0e564b8d5?auto=format&fit=crop&w=900&q=80" alt="Espacio común para estudiantes" /></figure>
+          <figure><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=900&q=80" alt="Recepción de hotel" /></figure>
+        </div>
+      </section>
+
+      <section id="contact" class="section contact-section">
+        <div class="section-heading">
+          <p class="eyebrow" data-i18n="contact.eyebrow">Consulta / Reserva</p>
+          <h2 data-i18n="contact.title">Consultá disponibilidad sin crear una cuenta.</h2>
+          <p data-i18n="contact.copy">Completá lo que sepas. Si falta algún dato, igual podés enviar la consulta.</p>
+        </div>
+        <form class="inquiry-form" id="inquiryForm">
+          <label><span data-i18n="form.firstName">Nombre</span><input name="firstName" type="text" /></label>
+          <label><span data-i18n="form.lastName">Apellido</span><input name="lastName" type="text" /></label>
+          <label><span>Email</span><input name="email" type="email" /></label>
+          <label><span data-i18n="form.phone">Teléfono</span><input name="phone" type="tel" /></label>
+          <label><span data-i18n="form.country">País</span><input name="country" type="text" /></label>
+          <label>
+            <span data-i18n="form.roomType">Tipo de habitación</span>
+            <select name="roomType">
+              <option value="simple" data-i18n="rooms.simple.title">Habitación simple</option>
+              <option value="double" data-i18n="rooms.double.title">Habitación doble</option>
+              <option value="triple" data-i18n="rooms.triple.title">Habitación triple</option>
+            </select>
+          </label>
+          <label><span data-i18n="form.guests">Personas</span><input name="guestCount" type="number" min="1" /></label>
+          <label><span data-i18n="form.checkIn">Ingreso</span><input name="checkIn" type="date" /></label>
+          <label><span data-i18n="form.checkOut">Salida</span><input name="checkOut" type="date" /></label>
+          <label>
+            <span data-i18n="form.modality">Modalidad</span>
+            <select name="modality">
+              <option value="night" data-i18n="modality.night">Por noche</option>
+              <option value="monthly" data-i18n="modality.monthly">Residencia mensual</option>
+            </select>
+          </label>
+          <label class="full"><span data-i18n="form.message">Mensaje adicional</span><textarea name="message" rows="5"></textarea></label>
+          <p class="form-note" id="formNote" data-i18n="form.note">Los campos incompletos se marcarán visualmente, pero podés consultar igual.</p>
+          <div class="form-actions">
+            <a class="btn whatsapp" id="whatsappLink" target="_blank" rel="noreferrer">WhatsApp</a>
+            <a class="btn mail" id="gmailLink">Gmail</a>
+          </div>
+        </form>
+      </section>
+
+      <section id="location" class="location-section">
+        <div class="location-copy">
+          <p class="eyebrow" data-i18n="location.eyebrow">Ubicación</p>
+          <h2 data-i18n="location.title">Av. 44 N°323, entre 1 y 2.</h2>
+          <p data-i18n="location.copy">Una ubicación céntrica en La Plata, práctica para moverse por estudio, trabajo, trámites o turismo.</p>
+          <a class="btn primary" target="_blank" rel="noreferrer" href="https://www.google.com/maps/search/?api=1&query=Av.+44+323+La+Plata+Buenos+Aires+Argentina" data-i18n="location.cta">Cómo llegar</a>
+        </div>
+        <div class="map-card">
+          <span>HOTEL REX</span>
+          <strong>La Plata</strong>
+          <small>Av. 44 N°323</small>
+        </div>
+      </section>
+
+      <section id="faq" class="section faq-section">
+        <div class="section-heading">
+          <p class="eyebrow">FAQ</p>
+          <h2 data-i18n="faq.title">Preguntas frecuentes.</h2>
+        </div>
+        <div class="faq-list" id="faqList"></div>
+      </section>
+    </main>
+
+    <footer class="premium-footer">
+      <div class="footer-brand">
+        <h2>HOTEL REX</h2>
+        <p data-i18n="footer.description">
+          Residencia estudiantil y hospedaje en el centro de La Plata. Habitaciones simples, dobles y triples con baño privado,
+          servicios incluidos y espacios pensados para estudiar, descansar y alojarse con comodidad.
+        </p>
+      </div>
+      <div>
+        <h3 data-i18n="footer.location">Ubicación</h3>
+        <p>La Plata, Buenos Aires</p>
+        <p>Av. 44 N°323, entre 1 y 2</p>
+      </div>
+      <div>
+        <h3 data-i18n="footer.contact">Contacto</h3>
+        <a class="contact-card" href="https://wa.me/5492216064151" target="_blank" rel="noreferrer" aria-label="Teléfono Hotel Rex">
+          <span>Teléfono</span>
+          <strong>+54 9 221 606 4151</strong>
+        </a>
+        <a class="contact-card" href="mailto:hotelrexoficial@gmail.com" aria-label="Gmail Hotel Rex">
+          <span>Gmail</span>
+          <strong>hotelrexoficial@gmail.com</strong>
+        </a>
+        <a class="contact-card" href="https://www.instagram.com/hotelrexoficial/" target="_blank" rel="noreferrer" aria-label="Instagram Hotel Rex">
+          <span>Instagram</span>
+          <strong>@hotelrexoficial</strong>
+        </a>
+      </div>
+    </footer>
+    <div class="legal-footer">
+      <span>© 2026 HOTEL REX</span>
+      <nav>
+        <a href="./legal/" data-i18n="legal.legalNotice">Aviso legal</a>
+        <a href="./privacidad/" data-i18n="legal.privacy">Política de privacidad</a>
+        <a href="./cookies/" data-i18n="legal.cookies">Preferencias de cookies</a>
+        <a href="./accesibilidad/" data-i18n="legal.accessibility">Política de accesibilidad</a>
+      </nav>
+    </div>
+
+  <script src="/app.js"></script>
+  </body>
+</html>

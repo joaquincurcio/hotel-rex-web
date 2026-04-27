@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar contraseña | Hotel Rex</title>
+  <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-card">
+      <img class="auth-logo" src="../assets/hotel-rex-logo.svg" alt="Hotel Rex" />
+      <p class="eyebrow">HOTEL REX</p>
+      <h1 data-auth="recoverTitle">Recuperar contraseña</h1>
+      <p data-auth="recoverCopy">Ingresá tu email. En la integración Supabase se enviará un enlace seguro.</p>
+      <form class="auth-form" data-recovery="true">
+        <label><span data-auth="email">Email</span><input name="email" type="email" required /></label>
+        <button class="btn primary" type="submit" data-auth="sendRecovery">Enviar enlace</button>
+        <p class="form-note" data-status></p>
+      </form>
+      <div class="auth-links">
+        <a href="../login/" data-auth="goLogin">Ya tengo cuenta</a>
+        <a href="../" data-auth="back">Volver al sitio</a>
+      </div>
+    </main>
+  <script src="/auth.js"></script>
+  </body>
+</html>
