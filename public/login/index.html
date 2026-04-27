@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iniciar sesión | Hotel Rex</title>
+  <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body class="auth-body">
+    <main class="auth-card">
+      <img class="auth-logo" src="../assets/hotel-rex-logo.svg" alt="Hotel Rex" />
+      <p class="eyebrow">HOTEL REX</p>
+      <h1 data-auth="loginTitle">Iniciar sesión</h1>
+      <p data-auth="loginCopy">Ingresá para guardar tus datos y preparar futuras reservas.</p>
+      <form class="auth-form" data-redirect="../mi-cuenta/">
+        <label><span data-auth="email">Email</span><input name="email" type="email" required /></label>
+        <label><span data-auth="password">Contraseña</span><input name="password" type="password" required /></label>
+        <button class="btn primary" type="submit" data-auth="signIn">Iniciar sesión</button>
+      </form>
+      <div class="auth-links">
+        <a href="../registro/" data-auth="goRegister">Crear cuenta</a>
+        <a href="../recuperar/" data-auth="recover">Recuperar contraseña</a>
+        <a href="../" data-auth="back">Volver al sitio</a>
+      </div>
+    </main>
+  <script src="/auth.js"></script>
+  </body>
+</html>

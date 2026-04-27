@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" role="img" aria-labelledby="title">
+  <title id="title">Hotel Rex La Plata</title>
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="66%">
+      <stop offset="0" stop-color="#2a2926"/>
+      <stop offset="1" stop-color="#101010"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="30%" y1="0%" x2="75%" y2="100%">
+      <stop offset="0" stop-color="#ffe27a"/>
+      <stop offset="0.45" stop-color="#c9a45c"/>
+      <stop offset="1" stop-color="#8d6a2b"/>
+    </linearGradient>
+  </defs>
+  <rect width="240" height="240" fill="transparent"/>
+  <circle cx="120" cy="120" r="103" fill="url(#bg)" stroke="#0a0a0a" stroke-width="8"/>
+  <circle cx="120" cy="120" r="94" fill="none" stroke="url(#gold)" stroke-width="6"/>
+  <g fill="none" stroke="url(#gold)" stroke-width="4.6" stroke-linejoin="round">
+    <path d="M71 73l30 18 19-35 19 35 30-18-13 43H84z"/>
+    <path d="M101 112h38"/>
+    <path d="M120 88l8 10-8 10-8-10z" fill="url(#gold)"/>
+  </g>
+  <text x="120" y="157" text-anchor="middle" fill="url(#gold)" font-family="Georgia, 'Times New Roman', serif" font-size="82" letter-spacing="-9">HR</text>
+  <path d="M70 181h38M132 181h38" stroke="url(#gold)" stroke-width="4"/>
+  <path d="M120 174l8 8-8 8-8-8z" fill="url(#gold)"/>
+</svg>
