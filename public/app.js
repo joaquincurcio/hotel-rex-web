@@ -442,8 +442,8 @@ const translations = {
 
 const rooms = [
   { key: "simple", basePrice: 60000 },
-  { key: "double", basePrice: 95000 },
-  { key: "triple", basePrice: 135000 },
+{ key: "double", basePrice: 65000 },
+{ key: "triple", basePrice: 105000 },
 ];
 
 function t(path) {
