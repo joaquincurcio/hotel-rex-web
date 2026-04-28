@@ -4,7 +4,9 @@ const exchangeRates = {
   BRL: 280,
 };
 
-const contactEmail = "hotelrexoficial@gmail.com";
+const supabaseUrl = "https://aedyyfalybrnvwuomxpc.supabase.co";
+const supabaseAnonKey = "sb_publishable_Pc8h1KnMHTPxZ5JbqlQIYA_3T9Aejl-";
+const supabaseClient = window.supabase?.createClient(supabaseUrl, supabaseAnonKey);
 
 const roomImages = {
   simple: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=900&q=80",
@@ -547,13 +549,11 @@ function autofillInquiryFromProfile() {
 
 function saveGuestAction(channel) {
   const profile = getStoredProfile();
-  if (!profile.signedIn) return;
-
   const values = getFormValues();
   const now = new Date().toISOString();
   const inquiry = {
     id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
-    userEmail: profile.email,
+    userEmail: profile.email || values.email,
     channel,
     idioma: state.lang,
     moneda: state.currency,
@@ -561,13 +561,51 @@ function saveGuestAction(channel) {
     createdAt: now,
   };
 
-  const inquiries = JSON.parse(localStorage.getItem("hotelRex.inquiries") || "[]");
-  inquiries.push(inquiry);
-  localStorage.setItem("hotelRex.inquiries", JSON.stringify(inquiries));
+  if (profile.signedIn) {
+    const inquiries = JSON.parse(localStorage.getItem("hotelRex.inquiries") || "[]");
+    inquiries.push(inquiry);
+    localStorage.setItem("hotelRex.inquiries", JSON.stringify(inquiries));
 
-  const reservations = JSON.parse(localStorage.getItem("hotelRex.reservations") || "[]");
-  reservations.push({ ...inquiry, estado: "pendiente" });
-  localStorage.setItem("hotelRex.reservations", JSON.stringify(reservations));
+    const reservations = JSON.parse(localStorage.getItem("hotelRex.reservations") || "[]");
+    reservations.push({ ...inquiry, estado: "pendiente" });
+    localStorage.setItem("hotelRex.reservations", JSON.stringify(reservations));
+  }
+
+  return saveReservationToSupabase(values);
+}
+
+function normalizeDate(value) {
+  return value && String(value).trim() ? value : null;
+}
+
+async function saveReservationToSupabase(values) {
+  if (!supabaseClient) {
+    console.warn("Supabase client is not available.");
+    return { ok: false };
+  }
+
+  const payload = {
+    nombre: [values.firstName, values.lastName].filter(Boolean).join(" ").trim() || null,
+    telefono: values.phone || null,
+    tipo_habitacion: values.roomType || null,
+    personas: values.guestCount ? Number(values.guestCount) : null,
+    ingreso: normalizeDate(values.checkIn),
+    salida: normalizeDate(values.checkOut),
+    modalidad: values.modality || null,
+    estado: "pendiente",
+  };
+
+  const { error } = await supabaseClient.from("reservations").insert(payload);
+  const note = document.querySelector("#formNote");
+
+  if (error) {
+    console.error("No se pudo guardar la reserva en Supabase:", error);
+    if (note) note.textContent = "La consulta se abre por WhatsApp. Si no se registra automáticamente, revisaremos el mensaje por ese canal.";
+    return { ok: false, error };
+  }
+
+  if (note) note.textContent = "Consulta registrada. Te vamos a responder por WhatsApp para confirmar disponibilidad.";
+  return { ok: true };
 }
 
 function valueOrPlaceholder(value) {
@@ -635,7 +673,9 @@ function updateLinks() {
 }
 
 function wireContactTracking() {
-  document.querySelector("#whatsappLink").addEventListener("click", () => saveGuestAction("whatsapp"));
+  document.querySelector("#whatsappLink").addEventListener("click", () => {
+    saveGuestAction("whatsapp");
+  });
 }
 
 function copyQuickSearch() {
