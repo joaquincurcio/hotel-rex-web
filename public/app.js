@@ -571,20 +571,15 @@ function saveGuestAction(channel) {
     localStorage.setItem("hotelRex.reservations", JSON.stringify(reservations));
   }
 
-  return saveReservationToSupabase(values);
+  return inquiry;
 }
 
 function normalizeDate(value) {
   return value && String(value).trim() ? value : null;
 }
 
-async function saveReservationToSupabase(values) {
-  if (!supabaseClient) {
-    console.warn("Supabase client is not available.");
-    return { ok: false };
-  }
-
-  const payload = {
+function createReservationPayload(values) {
+  return {
     nombre: [values.firstName, values.lastName].filter(Boolean).join(" ").trim() || null,
     telefono: values.phone || null,
     tipo_habitacion: values.roomType || null,
@@ -594,18 +589,72 @@ async function saveReservationToSupabase(values) {
     modalidad: values.modality || null,
     estado: "pendiente",
   };
+}
+
+function setReservationStatus(message, type = "info") {
+  const note = document.querySelector("#formNote");
+  if (!note) return;
+  note.textContent = message;
+  note.dataset.status = type;
+}
+
+function validateReservation(values) {
+  const required = ["firstName", "phone", "roomType", "guestCount", "checkIn", "checkOut", "modality"];
+  const missing = required.filter((name) => !values[name] || !String(values[name]).trim());
+  markMissing(required);
+  return missing.length === 0;
+}
+
+async function saveReservationToSupabase(values) {
+  if (!supabaseClient) {
+    console.warn("Supabase client is not available.");
+    return { ok: false };
+  }
+
+  const payload = createReservationPayload(values);
 
   const { error } = await supabaseClient.from("reservations").insert(payload);
-  const note = document.querySelector("#formNote");
 
   if (error) {
     console.error("No se pudo guardar la reserva en Supabase:", error);
-    if (note) note.textContent = "La consulta se abre por WhatsApp. Si no se registra automáticamente, revisaremos el mensaje por ese canal.";
     return { ok: false, error };
   }
 
-  if (note) note.textContent = "Consulta registrada. Te vamos a responder por WhatsApp para confirmar disponibilidad.";
-  return { ok: true };
+  return { ok: true, payload };
+}
+
+async function sendReservationEmail(payload) {
+  try {
+    const response = await fetch("/api/send-reservation-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) {
+      const details = await response.text();
+      console.error("No se pudo enviar el email de reserva:", details);
+      return { ok: false };
+    }
+
+    return { ok: true };
+  } catch (error) {
+    console.error("Error enviando email de reserva:", error);
+    return { ok: false, error };
+  }
+}
+
+async function submitReservation(values) {
+  const saved = await saveReservationToSupabase(values);
+
+  if (!saved.ok) {
+    setReservationStatus("No pudimos enviar la consulta. Por favor, intentá nuevamente o escribinos por WhatsApp.", "error");
+    return saved;
+  }
+
+  setReservationStatus("Consulta enviada correctamente. Te contactaremos por WhatsApp a la brevedad.", "success");
+  sendReservationEmail(saved.payload);
+  return saved;
 }
 
 function valueOrPlaceholder(value) {
@@ -657,11 +706,11 @@ function buildEmailBody(values) {
   return `Hola, equipo de Hotel Rex.\n\nQuiero consultar disponibilidad.\n\nTipo de habitación: ${roomType}\nCantidad de personas: ${guests}\nFecha de ingreso: ${checkIn}\nFecha de salida: ${checkOut}\nModalidad: ${modality}\n\nTambién quisiera recibir información sobre precios, servicios incluidos y pasos para reservar.\n\nMuchas gracias.`;
 }
 
-function markMissing() {
+function markMissing(fields = ["roomType", "guestCount", "checkIn", "checkOut", "modality"]) {
   const form = document.querySelector("#inquiryForm");
-  ["roomType", "guestCount", "checkIn", "checkOut", "modality"].forEach((name) => {
+  fields.forEach((name) => {
     const field = form.elements[name];
-    field.closest("label").classList.toggle("invalid", !field.value);
+    if (field) field.closest("label").classList.toggle("invalid", !field.value);
   });
 }
 
@@ -673,8 +722,30 @@ function updateLinks() {
 }
 
 function wireContactTracking() {
-  document.querySelector("#whatsappLink").addEventListener("click", () => {
+  document.querySelector("#whatsappLink").addEventListener("click", async (event) => {
+    event.preventDefault();
+    const values = getFormValues();
+
+    if (!validateReservation(values)) {
+      setReservationStatus("Completá los campos principales para enviar la consulta.", "error");
+      return;
+    }
+
     saveGuestAction("whatsapp");
+    const whatsappUrl = event.currentTarget.href;
+    const whatsappWindow = window.open("about:blank", "_blank");
+    const result = await submitReservation(values);
+
+    if (result.ok) {
+      if (whatsappWindow) {
+        whatsappWindow.location.href = whatsappUrl;
+      } else {
+        window.location.href = whatsappUrl;
+      }
+      return;
+    }
+
+    if (whatsappWindow) whatsappWindow.close();
   });
 }
 

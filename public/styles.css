@@ -780,8 +780,24 @@ textarea {
 
 .form-note {
   margin: 0;
+  padding: 12px 14px;
   color: var(--soft-gray);
+  background: rgba(201, 164, 92, 0.1);
+  border: 1px solid rgba(201, 164, 92, 0.22);
   font-size: 14px;
+  font-weight: 700;
+}
+
+.form-note[data-status="success"] {
+  color: #14532d;
+  background: rgba(21, 128, 61, 0.1);
+  border-color: rgba(21, 128, 61, 0.28);
+}
+
+.form-note[data-status="error"] {
+  color: var(--burgundy);
+  background: rgba(92, 13, 30, 0.08);
+  border-color: rgba(92, 13, 30, 0.24);
 }
 
 .location-section {
