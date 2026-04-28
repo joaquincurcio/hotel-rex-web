@@ -136,7 +136,7 @@ const translations = {
         ["¿Qué servicios incluye?", "Wi-Fi, TV, frigobar, calefacción, ventilador de techo, placard y espacios comunes."],
         ["¿Se puede alquilar por mes?", "Sí, Hotel Rex funciona también como residencia estudiantil con opción mensual."],
         ["¿Se puede reservar por noche?", "Sí, se pueden consultar estadías temporarias por noche."],
-        ["¿Cómo consulto disponibilidad?", "Podés completar el formulario y escribir por WhatsApp o Gmail con el mensaje generado automáticamente."],
+      ["¿Cómo consulto disponibilidad?", "Podés completar el formulario y escribir por WhatsApp con el mensaje generado automáticamente."],
         ["¿Puedo escribir por WhatsApp?", "Sí, el botón abre WhatsApp con la consulta precargada."],
         ["¿La residencia es para estudiantes?", "Sí, está pensada especialmente para estudiantes que buscan ubicación y comodidad."],
         ["¿Qué tipos de habitaciones hay?", "Habitaciones simples, dobles y triples."],
@@ -276,7 +276,7 @@ const translations = {
         ["What services are included?", "Wi-Fi, TV, minibar, heating, ceiling fan, wardrobe and common spaces."],
         ["Can I rent monthly?", "Yes, Hotel Rex also works as a student residence with monthly options."],
         ["Can I book by the night?", "Yes, temporary nightly stays can be requested."],
-        ["How do I check availability?", "Complete the form and contact by WhatsApp or Gmail with an automatically generated message."],
+      ["How do I check availability?", "Complete the form and contact by WhatsApp with an automatically generated message."],
         ["Can I write via WhatsApp?", "Yes, the button opens WhatsApp with the inquiry preloaded."],
         ["Is the residence for students?", "Yes, it is especially designed for students seeking location and comfort."],
         ["What room types are available?", "Single, double and triple rooms."],
@@ -416,7 +416,7 @@ const translations = {
         ["Quais serviços estão incluídos?", "Wi-Fi, TV, frigobar, aquecimento, ventilador de teto, armário e espaços comuns."],
         ["É possível alugar por mês?", "Sim, o Hotel Rex também funciona como residência estudantil com opção mensal."],
         ["É possível reservar por noite?", "Sim, é possível consultar estadias temporárias por noite."],
-        ["Como consulto disponibilidade?", "Complete o formulário e escreva por WhatsApp ou Gmail com a mensagem gerada automaticamente."],
+      ["Como consulto disponibilidade?", "Complete o formulário e escreva por WhatsApp com a mensagem gerada automaticamente."],
         ["Posso escrever por WhatsApp?", "Sim, o botão abre o WhatsApp com a consulta preenchida."],
         ["A residência é para estudantes?", "Sim, foi pensada especialmente para estudantes que buscam localização e conforto."],
         ["Que tipos de quartos existem?", "Quartos individuais, duplos e triplos."],
@@ -631,14 +631,11 @@ function updateLinks() {
   const values = getFormValues();
   markMissing();
   const whatsappMessage = buildWhatsappMessage(values);
-  const emailBody = buildEmailBody(values);
   document.querySelector("#whatsappLink").href = `https://wa.me/5492216064151?text=${encodeURIComponent(whatsappMessage)}`;
-  document.querySelector("#gmailLink").href = `mailto:${contactEmail}?subject=${encodeURIComponent(t("emailSubject"))}&body=${encodeURIComponent(emailBody)}`;
 }
 
 function wireContactTracking() {
   document.querySelector("#whatsappLink").addEventListener("click", () => saveGuestAction("whatsapp"));
-  document.querySelector("#gmailLink").addEventListener("click", () => saveGuestAction("gmail"));
 }
 
 function copyQuickSearch() {
